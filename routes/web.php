@@ -17,6 +17,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+// Rutas para vacantes
+
+Route::get('/vacantes','VacanteController@index')->name('vacantes.index');
