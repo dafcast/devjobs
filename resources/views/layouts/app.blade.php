@@ -57,6 +57,10 @@
             </div>
         </div>
 
+        <div class="bg-gray-700">
+            @yield('navegacion')
+        </div>
+
         <main class="">
             @yield('content')
         </main>
