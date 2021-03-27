@@ -40,7 +40,31 @@
             leading-tight focus:outline-none focus:bg-white text-gray-700 focus:border-gray-500">
                 <option value="" disabled selected>-- seleccione --</option>
                 @foreach($experiencias as $experiencia)
-                    <option value="{{$experiencia->id}}">{{$experiencia->cantidad}}</option>
+                    <option value="{{$experiencia->id}}">{{$experiencia->experiencia}}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="mb-5 flex flex-wrap">
+            <label for="ubicacion" class="w-full text-sm text-gray-600 mb-2">Ubicacion</label>
+            <select name="ubicacion" id="ubicacion" 
+            class="w-full p-2 appearance-none rounded bg-gray-100 border border-gray-200
+            leading-tight focus:outline-none focus:bg-white text-gray-700 focus:border-gray-500">
+                <option value="" disabled selected>-- seleccione --</option>
+                @foreach($ubicacions as $ubicacion)
+                    <option value="{{$ubicacion->id}}">{{$ubicacion->ubicacion}}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="mb-5 flex flex-wrap">
+            <label for="salario" class="w-full text-sm text-gray-600 mb-2">Salario</label>
+            <select name="salario" id="salario" 
+            class="w-full p-2 appearance-none rounded bg-gray-100 border border-gray-200
+            leading-tight focus:outline-none focus:bg-white text-gray-700 focus:border-gray-500">
+                <option value="" disabled selected>-- seleccione --</option>
+                @foreach($salarios as $salario)
+                    <option value="{{$salario->id}}">{{$salario->salario}}</option>
                 @endforeach
             </select>
         </div>

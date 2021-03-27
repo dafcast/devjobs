@@ -13,23 +13,23 @@ class ExperienciaSeeder extends Seeder
     public function run()
     {
         Experiencia::create([
-            'cantidad' => '0 a 6 meses'
+            'experiencia' => '0 a 6 meses'
         ]);
 
         Experiencia::create([
-            'cantidad' => '6 meses a 1 año'
+            'experiencia' => '6 meses a 1 año'
         ]);
 
         Experiencia::create([
-            'cantidad' => '1 año a 3 años'
+            'experiencia' => '1 año a 3 años'
         ]);
 
         Experiencia::create([
-            'cantidad' => '3 a 6 años'
+            'experiencia' => '3 a 6 años'
         ]);
 
         Experiencia::create([
-            'cantidad' => '6 a 10 años'
+            'experiencia' => '6 a 10 años'
         ]);
     }
 }
