@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('styles')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/medium-editor/5.23.3/css/medium-editor.min.css" integrity="sha512-zYqhQjtcNMt8/h4RJallhYRev/et7+k/HDyry20li5fWSJYSExP9O07Ung28MUuXDneIFg0f2/U3HJZWsTNAiw==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.8.1/dropzone.min.css" integrity="sha512-jU/7UFiaW5UBGODEopEqnbIAHOI8fO6T99m7Tsmqs2gkdujByJfkCbbfPSN4Wlqlb9TGnsuC0YgUgWkRBK7B9A==" crossorigin="anonymous" />
+@endsection
 
 @section('navegacion')
     <nav class="container mx-auto text-white font-bold uppercase flex flex-wrap">
@@ -68,6 +72,28 @@
                 @endforeach
             </select>
         </div>
+        
+        <div class="mb-5 flex flex-wrap">
+            <label for="descripcion" class="w-full text-sm text-gray-600 mb-2">Descripcion</label>
+            <div class="editable w-full p-3 bg-gray-100 rounded form-input text-gray-700"></div>
+            <input type="hidden" name="descripcion" id="descripcion">
+        </div>
+
+        <div class="mb-5 flex flex-wrap">
+            <label for="dropzoneDevJobs" class="w-full text-sm text-gray-600 mb-2">Imagen vacante</label>
+            <div id="dropzoneDevJobs" class="dropzone w-full"></div>
+            <input type="hidden" name="imagen" id="imagen">
+            <span id="errorArchivo" class="bg-red-200 border-l-4 border-red-700 text-red-700 w-full p-2 text-sm mb-4 hidden font-bold" role="alert"></span>
+        </div>
+
+        @php
+            $skills = ['HTML5', 'CSS3', 'CSSGrid', 'Flexbox', 'JavaScript', 'jQuery', 'Node', 'Angular', 'VueJS', 'ReactJS', 'React Hooks', 'Redux', 'Apollo', 'GraphQL', 'TypeScript', 'PHP', 'Laravel', 'Symfony', 'Python', 'Django', 'ORM', 'Sequelize', 'Mongoose', 'SQL', 'MVC', 'SASS', 'WordPress', 'Express', 'Deno', 'React Native', 'Flutter', 'MobX', 'C#', 'Ruby on Rails']
+        @endphp
+
+        <div class="mb-5 flex flex-wrap">
+            <label for="skills" class="w-full text-sm text-gray-600 mb-2">Habilidades y conocimientos</label>
+            <lista-skills :skills="{{json_encode($skills)}}"></lista-skills>
+        </div>
 
         <button type="submit" class="w-full bg-green-600 p-2 text-gray-100 uppercase font-bold hover:bg-green-700 focus:outline-none">
             Publicar vacante
@@ -75,4 +101,86 @@
 
     </form>
 </div>
+@endsection
+
+
+@section('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-editor/5.23.3/js/medium-editor.min.js" integrity="sha512-5D/0tAVbq1D3ZAzbxOnvpLt7Jl/n8m/YGASscHTNYsBvTcJnrYNiDIJm6We0RPJCpFJWowOPNz9ZJx7Ei+yFiA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.8.1/dropzone.min.js" integrity="sha512-QpZR7HNNxb5QQ5+qVXikXT0nDHUEwr0sNLG2pLaFCzpJ7ZqSsNEU8YfzWr9VzX29r7XPTPgASyfTFZeoSJe3sA==" crossorigin="anonymous"></script>
+    <script>
+        Dropzone.autoDiscover = false;
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // Medium Editor
+            const editor = new MediumEditor('.editable', {
+                toolbar : {
+                    buttons: ['bold', 'italic', 'underline', 'quote', 'anchor', 'justifyLeft', 'justifyCenter','justifyRight', 'justifyFull', 'orderedList', 'unorderedList', 'h2', 'h3'],
+                    static: true,
+                    sticky: true
+                },
+                placeholder: {
+                    text: 'Información de la vacante'
+                }
+            });
+
+            editor.subscribe('editableInput', function(eventObj, editable){
+                const contenido = editor.getContent();
+                document.querySelector('#descripcion').value = contenido;
+            })
+
+
+            // Dropzone
+
+            const dropzoneDevJobs = new Dropzone('#dropzoneDevJobs',{
+                url: "/vacantes/imagen",
+                dictDefaultMessage: 'Sube tu archivo',
+                acceptedFiles: ".png,.jpg,.jpeg,.bmp,.gif",
+                addRemoveLinks: true,
+                dictRemoveFile: 'Borrar archivo',
+                maxFiles: 1,
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content
+                },
+                success: function(file, response){
+
+                    const error = document.querySelector('#errorArchivo');
+                    
+                    error.style.display = 'none';
+                    error.textContent = '';
+
+
+                    document.querySelector('#imagen').value = response.correcto;
+                    file.nombreServidor = response.correcto;
+                },
+                error: function(file, response, errorMessage){
+
+                    const error = document.querySelector('#errorArchivo');
+                    if(response == "You can't upload files of this type."){
+                        error.style.display = 'block';
+                        error.textContent = 'Archivo no valido';
+                        if(this.files.length > 1){
+                            this.removeFile(this.files[1]);
+                        }else{
+                            this.removeFile(this.files[0]);
+                        }
+
+                        
+                    }
+                },
+                maxfilesexceeded: function(file){
+                    if(this.files.length > 1){
+                        this.removeFile(this.files[0]);
+                        file.previewElement.parentElement.removeChild(file.previewElement);
+                        this.files.shift();
+                        this.addFile(file);
+                    }
+                },
+                removedfile: function(file,response){
+                    file.previewElement.parentElement.removeChild(file.previewElement);
+                    axios.post('/vacantes/eliminarimagen',{imagen: file.nombreServidor}).then(respuesta => console.log(respuesta));
+                }
+            })
+        });
+        
+    </script>
 @endsection
