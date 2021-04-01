@@ -165,7 +165,7 @@
             // Medium Editor
             const editor = new MediumEditor('.editable', {
                 toolbar : {
-                    buttons: ['bold', 'italic', 'underline', 'quote', 'anchor', 'justifyLeft', 'justifyCenter','justifyRight', 'justifyFull', 'orderedList', 'unorderedList', 'h2', 'h3'],
+                    buttons: ['bold', 'italic', 'underline', 'quote', 'anchor', 'justifyLeft', 'justifyCenter','justifyRight', 'justifyFull', 'orderedList', 'unorderedLists', 'h2', 'h3'],
                     static: true,
                     sticky: true
                 },

@@ -25,7 +25,9 @@ class VacanteController extends Controller
      */
     public function index()
     {
-        return view('vacantes.index');
+        $vacantes = Vacante::where('user_id',auth()->user()->id)->simplepaginate(3);
+        // dd($vacantes);
+        return view('vacantes.index', ['vacantes' => $vacantes]);
     }
 
     /**
@@ -56,7 +58,7 @@ class VacanteController extends Controller
     public function store(Request $request)
     {
 
-        $validacion = $request->validate([
+        $data = $request->validate([
             'titulo' => ['required','min:8'],
             'categoria' => ['required'],
             'experiencia' => ['required'],
@@ -66,7 +68,19 @@ class VacanteController extends Controller
             'imagen' => ['required'],
             'skills' => ['required'],
         ]);
-        return $request;
+
+        auth()->user()->vacantes()->create([
+            'titulo' => $data['titulo'],
+            'categoria_id' => $data['categoria'],
+            'experiencia_id' => $data['experiencia'],
+            'ubicacion_id' => $data['ubicacion'],
+            'salario_id' => $data['salario'],
+            'descripcion' => $data['descripcion'],
+            'imagen' => $data['imagen'],
+            'skills' => $data['skills']
+        ]);
+
+        return redirect()->action('VacanteController@index');
     }
 
     /**
