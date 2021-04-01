@@ -55,7 +55,18 @@ class VacanteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $validacion = $request->validate([
+            'titulo' => ['required','min:8'],
+            'categoria' => ['required'],
+            'experiencia' => ['required'],
+            'ubicacion' => ['required'],
+            'salario' => ['required'],
+            'descripcion' => 'required|min:50',
+            'imagen' => ['required'],
+            'skills' => ['required'],
+        ]);
+        return $request;
     }
 
     /**
@@ -106,8 +117,8 @@ class VacanteController extends Controller
     public function imagen(Request $request){
         $imagen = $request->file('file');
 
-        $nombreImagen = $imagen->getClientOriginalName();
-        // $nombreImagen = time() . '.' . $imagen->extension();
+        // $nombreImagen = $imagen->getClientOriginalName();
+        $nombreImagen = time() . '.' . $imagen->extension();
         $path_imagen = $imagen->move(public_path('storage/vacantes'),$nombreImagen);
         return response()->json(['correcto' => $nombreImagen]);
     }

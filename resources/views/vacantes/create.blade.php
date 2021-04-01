@@ -15,75 +15,117 @@
 <div class="container mx-auto">
     <h1 class="text-center mt-20 text-2xl">Nueva Vacante</h1>
 
-    <form class="m-10 mx-auto w-full max-w-lg">
+    <form class="m-10 mx-auto w-full max-w-lg" action="{{route('vacantes.store')}}" method="POST">
+        @csrf
+
         <div class="mb-5 flex flex-wrap">
             <label for="titulo" class="w-full text-sm text-gray-600 mb-2">Titulo de la vacante:</label>
             <input 
-                class="bg-gray-100 w-full rounded py-2 focus:outline-none focus:ring-2 focus:ring-gray-600 @error('email') ring-2 ring-red-700 focus:ring-red-700 @enderror"
+                class="bg-gray-100 w-full rounded py-2 focus:outline-none focus:ring-2 focus:ring-gray-600 @error('titulo') ring-2 ring-red-700 focus:ring-red-700 @enderror"
                 type="text"
                 id="titulo"
                 name="titulo"
+                value="{{old('titulo')}}"
             >
+            @error('titulo')
+                <span class="bg-red-200 border-l-4 border-red-700 text-red-700 w-full p-2 text-sm mt-2" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
         </div>
+
         <div class="mb-5 flex flex-wrap">
             <label for="categoria" class="w-full text-sm text-gray-600 mb-2">Categoria vacante</label>
             <select name="categoria" id="categoria" 
             class="w-full p-2 appearance-none rounded bg-gray-100 border border-gray-200
-            leading-tight focus:outline-none focus:bg-white text-gray-700 focus:border-gray-500">
+            leading-tight focus:outline-none focus:bg-white text-gray-700 focus:border-gray-500 @error('categoria') ring-2 ring-red-700 focus:ring-red-700 @enderror">
                 <option value="" disabled selected>-- seleccione --</option>
                 @foreach($categorias as $categoria)
-                    <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
+                    <option value="{{$categoria->id}}" {{ (old('categoria') == $categoria->id) ? 'selected' :'' }}>{{$categoria->nombre}}</option>
                 @endforeach
             </select>
+
+            @error('categoria')
+            <span class="bg-red-200 border-l-4 border-red-700 text-red-700 w-full p-2 text-sm mt-2" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
         </div>
 
         <div class="mb-5 flex flex-wrap">
             <label for="experiencia" class="w-full text-sm text-gray-600 mb-2">Experiencia</label>
             <select name="experiencia" id="experiencia" 
             class="w-full p-2 appearance-none rounded bg-gray-100 border border-gray-200
-            leading-tight focus:outline-none focus:bg-white text-gray-700 focus:border-gray-500">
+            leading-tight focus:outline-none focus:bg-white text-gray-700 focus:border-gray-500 @error('experiencia') ring-2 ring-red-700 focus:ring-red-700 @enderror">
                 <option value="" disabled selected>-- seleccione --</option>
                 @foreach($experiencias as $experiencia)
-                    <option value="{{$experiencia->id}}">{{$experiencia->experiencia}}</option>
+                    <option value="{{$experiencia->id}}" {{ (old('experiencia') == $experiencia->id) ? 'selected' :'' }}>{{$experiencia->experiencia}}</option>
                 @endforeach
             </select>
+
+            @error('experiencia')
+                <span class="bg-red-200 border-l-4 border-red-700 text-red-700 w-full p-2 text-sm mt-2" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
         </div>
 
         <div class="mb-5 flex flex-wrap">
             <label for="ubicacion" class="w-full text-sm text-gray-600 mb-2">Ubicacion</label>
             <select name="ubicacion" id="ubicacion" 
             class="w-full p-2 appearance-none rounded bg-gray-100 border border-gray-200
-            leading-tight focus:outline-none focus:bg-white text-gray-700 focus:border-gray-500">
+            leading-tight focus:outline-none focus:bg-white text-gray-700 focus:border-gray-500 @error('ubicacion') ring-2 ring-red-700 focus:ring-red-700 @enderror">
                 <option value="" disabled selected>-- seleccione --</option>
                 @foreach($ubicacions as $ubicacion)
-                    <option value="{{$ubicacion->id}}">{{$ubicacion->ubicacion}}</option>
+                    <option value="{{$ubicacion->id}}" {{ (old('ubicacion') == $ubicacion->id) ? 'selected' :'' }}>{{$ubicacion->ubicacion}}</option>
                 @endforeach
             </select>
+
+            @error('ubicacion')
+                <span class="bg-red-200 border-l-4 border-red-700 text-red-700 w-full p-2 text-sm mt-2" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
         </div>
 
         <div class="mb-5 flex flex-wrap">
             <label for="salario" class="w-full text-sm text-gray-600 mb-2">Salario</label>
             <select name="salario" id="salario" 
             class="w-full p-2 appearance-none rounded bg-gray-100 border border-gray-200
-            leading-tight focus:outline-none focus:bg-white text-gray-700 focus:border-gray-500">
+            leading-tight focus:outline-none focus:bg-white text-gray-700 focus:border-gray-500 @error('salario') ring-2 ring-red-700 focus:ring-red-700 @enderror">
                 <option value="" disabled selected>-- seleccione --</option>
                 @foreach($salarios as $salario)
-                    <option value="{{$salario->id}}">{{$salario->salario}}</option>
+                    <option value="{{$salario->id}}" {{ (old('salario') == $salario->id) ? 'selected' :'' }}>{{$salario->salario}}</option>
                 @endforeach
             </select>
+            @error('salario')
+                <span class="bg-red-200 border-l-4 border-red-700 text-red-700 w-full p-2 text-sm mt-2" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
         </div>
         
         <div class="mb-5 flex flex-wrap">
             <label for="descripcion" class="w-full text-sm text-gray-600 mb-2">Descripcion</label>
-            <div class="editable w-full p-3 bg-gray-100 rounded form-input text-gray-700"></div>
-            <input type="hidden" name="descripcion" id="descripcion">
+            <div class="editable w-full p-3 bg-gray-100 rounded form-input text-gray-700 @error('descripcion') ring-2 ring-red-700 focus:ring-red-700 @enderror"></div>
+            <input type="hidden" name="descripcion" id="descripcion" value="{{old('descripcion')}}">
+            @error('descripcion')
+                <span class="bg-red-200 border-l-4 border-red-700 text-red-700 w-full p-2 text-sm mt-2" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
         </div>
 
         <div class="mb-5 flex flex-wrap">
             <label for="dropzoneDevJobs" class="w-full text-sm text-gray-600 mb-2">Imagen vacante</label>
-            <div id="dropzoneDevJobs" class="dropzone w-full"></div>
-            <input type="hidden" name="imagen" id="imagen">
+            <div id="dropzoneDevJobs" class="dropzone w-full  @error('imagen') ring-2 ring-red-700 focus:ring-red-700 @enderror"></div>
+            <input type="hidden" name="imagen" id="imagen" value="{{old('imagen')}}">
             <span id="errorArchivo" class="bg-red-200 border-l-4 border-red-700 text-red-700 w-full p-2 text-sm mb-4 hidden font-bold" role="alert"></span>
+            @error('imagen')
+                <span class="bg-red-200 border-l-4 border-red-700 text-red-700 w-full p-2 text-sm mt-2" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
         </div>
 
         @php
@@ -92,8 +134,17 @@
 
         <div class="mb-5 flex flex-wrap">
             <label for="skills" class="w-full text-sm text-gray-600 mb-2">Habilidades y conocimientos</label>
-            <lista-skills :skills="{{json_encode($skills)}}"></lista-skills>
+            <lista-skills
+                :skills="{{json_encode($skills)}}"
+                :oldskills="{{json_encode(old('skills'))}}"
+            ></lista-skills>
+            @error('skills')
+                <span class="bg-red-200 border-l-4 border-red-700 text-red-700 w-full p-2 text-sm mt-2" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
         </div>
+
 
         <button type="submit" class="w-full bg-green-600 p-2 text-gray-100 uppercase font-bold hover:bg-green-700 focus:outline-none">
             Publicar vacante
@@ -123,10 +174,16 @@
                 }
             });
 
+            //agregar contenido al input hidden
+
             editor.subscribe('editableInput', function(eventObj, editable){
                 const contenido = editor.getContent();
                 document.querySelector('#descripcion').value = contenido;
             })
+
+            //leer valor del input hiddent
+
+            editor.setContent(document.querySelector('#descripcion').value);
 
 
             // Dropzone
@@ -140,6 +197,20 @@
                 maxFiles: 1,
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content
+                },
+                init: function(){
+                    if(document.querySelector('#imagen').value){
+                        let imagenPublicada = {};
+                        imagenPublicada.size = 1234;
+                        imagenPublicada.name = document.querySelector('#imagen').value;
+
+                        this.options.addedfile.call(this, imagenPublicada);
+                        this.options.thumbnail.call(this, imagenPublicada,`/storage/vacantes/${imagenPublicada.name}`);
+
+                        imagenPublicada.previewElement.classList.add('dz-success');
+                        imagenPublicada.previewElement.classList.add('dz-complete');
+
+                    }
                 },
                 success: function(file, response){
 
@@ -177,7 +248,10 @@
                 },
                 removedfile: function(file,response){
                     file.previewElement.parentElement.removeChild(file.previewElement);
-                    axios.post('/vacantes/eliminarimagen',{imagen: file.nombreServidor}).then(respuesta => console.log(respuesta));
+                    params = {
+                        imagen: file.nombreServidor ?? document.querySelector('#imagen').value
+                    }
+                    axios.post('/vacantes/eliminarimagen',params).then(respuesta => console.log(respuesta));
                 }
             })
         });
