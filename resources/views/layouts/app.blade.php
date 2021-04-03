@@ -22,6 +22,11 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body class="bg-gray-200 min-h-screen">
+    
+    @if(session('estado'))
+        <div class="bg-green-600 p-8 text-white uppercase font-bold text-center">{{session('estado')}}</div>
+    @endif
+
     <div id="app">
         <div class="bg-gray-800 text-white">
 

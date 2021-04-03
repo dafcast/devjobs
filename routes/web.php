@@ -39,3 +39,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 //Show vacante
 Route::get('/vacantes/{vacante}','VacanteController@show')->name('vacantes.show');
 
+
+//rutas candidatos
+
+Route::post('/candidatos','CandidatoController@store')->name('candidatos.store');

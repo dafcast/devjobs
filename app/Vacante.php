@@ -23,4 +23,8 @@ class Vacante extends Model
     public function ubicacion(){
         return $this->belongsTo(Ubicacion::class);
     }
+
+    public function candidatos(){
+        return $this->hasMany(Candidato::class);
+    }
 }

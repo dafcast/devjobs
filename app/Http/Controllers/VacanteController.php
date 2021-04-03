@@ -87,6 +87,7 @@ class VacanteController extends Controller
     public function show(Vacante $vacante)
     {
         return view('vacantes.show',['vacante' => $vacante]);
+        // return view('vacantes.show')->with('vacante', $vacante);
     }
 
     /**
