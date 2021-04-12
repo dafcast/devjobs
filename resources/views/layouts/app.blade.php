@@ -30,7 +30,7 @@
     <div id="app">
         <div class="bg-gray-800 text-white">
 
-            <div class="container mx-auto flex items-center justify-around py-2">
+            <div class="container mx-auto flex items-center justify-around py-4">
 
                 <a class="text-2xl" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -45,8 +45,11 @@
                         @endif
                     @else
                         
-                        <a class="mr-4" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        <a class="" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }}
+                        </a>
+                        <a href="{{route('notificaciones.index')}}" class="bg-green-600 rounded-full py-1 px-2 mx-2 text-center">
+                            {{ Auth::user()->unreadNotifications->count()}}
                         </a>
                         
                         <a class="hover:underline hover hover:text-gray-200" href="{{ route('logout') }}"

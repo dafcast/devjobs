@@ -6,6 +6,7 @@ use App\Vacante;
 use App\Candidato;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Notifications\NuevoCandidato;
 
 class CandidatoController extends Controller
 {
@@ -47,6 +48,7 @@ class CandidatoController extends Controller
         $nombreArvhivo = time() . '.' .$data['cv']->extension();
         $data['cv']->move(public_path('storage/cv/'), $nombreArvhivo);
 
+        
         //Envio a base de datos con DB
 
         // DB::table('candidatos')->insert([
@@ -82,11 +84,16 @@ class CandidatoController extends Controller
         // $data['cv'] = $nombreArvhivo;
         // Candidato::create($data);
 
-        Vacante::find($data['vacante_id'])->candidatos()->create([
+
+        $vacante = Vacante::find($data['vacante_id']);
+        $vacante->candidatos()->create([
             'nombre' => $data['nombre'],
             'email' => $data['email'],
             'cv' => $nombreArvhivo
         ]);
+
+        $vacante->user->notify(new NuevoCandidato($vacante));
+
 
         return back()->with('estado','datos enviados, en los proximos dias sera contactado');
         

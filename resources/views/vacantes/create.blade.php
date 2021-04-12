@@ -6,9 +6,7 @@
 @endsection
 
 @section('navegacion')
-    <nav class="container mx-auto text-white font-bold uppercase flex flex-wrap">
-        @include('ui.navegacion')
-    </nav>
+    @include('ui.navegacion')
 @endsection
 
 @section('content')

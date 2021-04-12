@@ -34,6 +34,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     //Rutas imagenes
     Route::post('/vacantes/imagen','VacanteController@imagen')->name('vacantes.imagen');
     Route::post('/vacantes/eliminarimagen','VacanteController@eliminarimagen')->name('vacantes.eliminarimagen');
+    
+    //notficicaciones
+    Route::get('/notificaciones','NotificacionController')->name('notificaciones.index');
 });
 
 //Show vacante
