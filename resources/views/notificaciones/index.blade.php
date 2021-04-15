@@ -14,7 +14,11 @@
             @php
                 $data = $notificacion->data;
             @endphp
-            <li class="border border-gray-400 px-2 py-4 mb-1">Tienes un nuevo candidato en: <span class="font-bold">{{$data['vacante']}}</span></li>
+            <li class="border border-gray-400 px-2 py-4 mb-1">
+                <p>Tienes un nuevo candidato en: <span class="font-bold">{{$data['vacante']}}</span></p>
+                <p>Te escribio: <span class="font-bold">{{$notificacion->created_at->diffForHumans()}}</span></p>
+                <a class="bg-green-600 inline-block p-3 text-white" href="{{route('candidatos.index',['vacante' => $data['vacante_id']])}}">Ver candidatos</a>
+            </li>
         @endforeach
     </ul>
 @endsection

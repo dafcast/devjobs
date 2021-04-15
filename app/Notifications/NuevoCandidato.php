@@ -50,7 +50,8 @@ class NuevoCandidato extends Notification
 
     public function toDatabase(){
         return [
-            'vacante' => $this->vacante->titulo
+            'vacante' => $this->vacante->titulo,
+            'vacante_id' => $this->vacante->id
         ];
     }
 

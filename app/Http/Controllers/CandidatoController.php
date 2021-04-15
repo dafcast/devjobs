@@ -13,11 +13,13 @@ class CandidatoController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \App\Vacante  $vacante
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Vacante $vacante)
     {
-        //
+        // $candidatos = $vacante->candidatos;
+        return view('candidatos.index',['vacante' => $vacante]);
     }
 
     /**

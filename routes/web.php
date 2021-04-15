@@ -30,6 +30,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/vacantes','VacanteController@index')->name('vacantes.index');
     Route::get('/vacantes/create','VacanteController@create')->name('vacantes.create');
     Route::post('/vacantes','VacanteController@store')->name('vacantes.store');
+    Route::post('/vacantes/{vacante}','VacanteController@estado')->name('vacantes.estado');
+
+
 
     //Rutas imagenes
     Route::post('/vacantes/imagen','VacanteController@imagen')->name('vacantes.imagen');
@@ -37,6 +40,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     
     //notficicaciones
     Route::get('/notificaciones','NotificacionController')->name('notificaciones.index');
+
+
 });
 
 //Show vacante
@@ -46,3 +51,4 @@ Route::get('/vacantes/{vacante}','VacanteController@show')->name('vacantes.show'
 //rutas candidatos
 
 Route::post('/candidatos','CandidatoController@store')->name('candidatos.store');
+Route::get('/candidatos/{vacante}','CandidatoController@index')->name('candidatos.index');
