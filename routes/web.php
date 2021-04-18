@@ -30,14 +30,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/vacantes','VacanteController@index')->name('vacantes.index');
     Route::get('/vacantes/create','VacanteController@create')->name('vacantes.create');
     Route::post('/vacantes','VacanteController@store')->name('vacantes.store');
-    Route::post('/vacantes/{vacante}','VacanteController@estado')->name('vacantes.estado');
-
+    Route::delete('/vacantes/{vacante}','VacanteController@destroy')->name('vacantes.destroy');
+    Route::get('/vacantes/{vacante}/edit','VacanteController@edit')->name('vacantes.edit');
+    Route::put('/vacantes/{vacante}','VacanteController@update')->name('vacantes.update');
 
 
     //Rutas imagenes
     Route::post('/vacantes/imagen','VacanteController@imagen')->name('vacantes.imagen');
     Route::post('/vacantes/eliminarimagen','VacanteController@eliminarimagen')->name('vacantes.eliminarimagen');
+
     
+    //Cambiar estado
+    Route::post('/vacantes/{vacante}','VacanteController@estado')->name('vacantes.estado');
+
     //notficicaciones
     Route::get('/notificaciones','NotificacionController')->name('notificaciones.index');
 

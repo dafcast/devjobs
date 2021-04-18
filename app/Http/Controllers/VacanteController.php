@@ -98,7 +98,19 @@ class VacanteController extends Controller
      */
     public function edit(Vacante $vacante)
     {
-        //
+        $this->authorize('view',$vacante);
+
+        $categorias = Categoria::all();
+        $experiencias = Experiencia::all();
+        $ubicacions = Ubicacion::all();
+        $salarios = Salario::all();
+        return view('vacantes.edit',[
+                'vacante' => $vacante,
+                'categorias' => $categorias,
+                'experiencias' => $experiencias,
+                'ubicacions' => $ubicacions,
+                'salarios' => $salarios
+            ]);
     }
 
     /**
@@ -110,7 +122,30 @@ class VacanteController extends Controller
      */
     public function update(Request $request, Vacante $vacante)
     {
-        //
+        $this->authorize('update',$vacante);
+
+        $data = $request->validate([
+            'titulo' => ['required','min:8'],
+            'categoria' => ['required'],
+            'experiencia' => ['required'],
+            'ubicacion' => ['required'],
+            'salario' => ['required'],
+            'descripcion' => 'required|min:50',
+            'imagen' => ['required'],
+            'skills' => ['required'],
+        ]);
+        // return $vacante;
+        $vacante->titulo = $data['titulo'];
+        $vacante->skills = $data['skills'];
+        $vacante->imagen = $data['imagen'];
+        $vacante->descripcion = $data['descripcion'];
+        $vacante->categoria_id = $data['categoria'];
+        $vacante->experiencia_id = $data['experiencia']; 
+        $vacante->ubicacion_id = $data['ubicacion'];
+        $vacante->salario_id = $data['salario'];
+        $vacante->save();
+
+        return redirect()->action('VacanteController@index');
     }
 
     /**
@@ -119,9 +154,13 @@ class VacanteController extends Controller
      * @param  \App\Vacante  $vacante
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Vacante $vacante)
+    public function destroy(Vacante $vacante, Request $request)
     {
-        //
+        $this->authorize('delete',$vacante);
+
+        $vacante->delete();
+
+        return ['respuesta' => $vacante->titulo];
     }
 
     public function imagen(Request $request){

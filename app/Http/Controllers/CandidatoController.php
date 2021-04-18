@@ -19,6 +19,8 @@ class CandidatoController extends Controller
     public function index(Vacante $vacante)
     {
         // $candidatos = $vacante->candidatos;
+        $this->authorize('view',$vacante);
+
         return view('candidatos.index',['vacante' => $vacante]);
     }
 
