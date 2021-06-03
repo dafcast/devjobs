@@ -52,6 +52,7 @@ class VacanteController extends Controller
      */
     public function store(Request $request)
     {
+        return $request;
 
         $data = $request->validate([
             'titulo' => ['required','min:8'],
@@ -189,5 +190,24 @@ class VacanteController extends Controller
         $vacante->save();
 
         return ['respuesta' => 'correcto'];
+    }
+
+    /**
+     * @param \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+    public function busqueda(Request $request){
+
+        $data = $request->validate([
+            'categoria' => 'required',
+            'ubicacion' => 'required'
+        ]);
+
+        $vacantes = Vacante::where([
+            'categoria_id' => $data['categoria'],
+            'ubicacion_id' => $data['ubicacion']
+        ])->get();
+        return view('vacantes.busqueda',['vacantes' => $vacantes]);
     }
 }

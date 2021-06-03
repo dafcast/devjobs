@@ -13,13 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/','InicioController')->name('inicio.index');
 
 Auth::routes(['verify' => true]);
-
-Route::get('/home', 'HomeController@index')->name('home');
 
 
 
@@ -52,6 +48,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 //Show vacante
 Route::get('/vacantes/{vacante}','VacanteController@show')->name('vacantes.show');
 
+//Show Categoria
+Route::get('/categorias/{categoria}','CategoriaController@show')->name('categorias.show');
+
+//rutas busquedas
+
+Route::post('/busquedas','VacanteController@busqueda')->name('vacantes.busqueda');
 
 //rutas candidatos
 

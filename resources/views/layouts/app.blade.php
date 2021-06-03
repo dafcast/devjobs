@@ -14,7 +14,8 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
     @yield('styles')
 
@@ -45,8 +46,11 @@
                         @endif
                     @else
                         
-                        <a class="" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        <a class="" href="#" role="button">
                             {{ Auth::user()->name }}
+                        </a>
+                        <a href="{{route('vacantes.index')}}" class="bg-green-600">
+                            Mis vacantes
                         </a>
                         <a href="{{route('notificaciones.index')}}" class="bg-green-600 rounded-full py-1 px-2 mx-2 text-center">
                             {{ Auth::user()->unreadNotifications->count()}}
